@@ -1,0 +1,9 @@
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\obj\Debug\DecisionTreeApp.csprojAssemblyReference.cache
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\obj\Debug\DecisionTreeApp.Properties.Resources.resources
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\obj\Debug\DecisionTreeApp.csproj.GenerateResource.cache
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\bin\Debug\DecisionTreeApp.exe.config
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\bin\Debug\DecisionTreeApp.exe
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\bin\Debug\DecisionTreeApp.pdb
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\obj\Debug\DecisionTreeApp.Form1.resources
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\obj\Debug\DecisionTreeApp.exe
+C:\Users\Niko\source\repos\DecisionTreeApp\DecisionTreeApp\obj\Debug\DecisionTreeApp.pdb
