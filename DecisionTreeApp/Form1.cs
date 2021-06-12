@@ -10,6 +10,18 @@ using System.Windows.Forms;
 
 namespace DecisionTreeApp
 {
+    public delegate void EventDelegate();
+
+    public class PrintTablEevent
+    {
+        public event EventDelegate tableEvent = null;
+
+        public void InvokeEvent()
+        {
+            tableEvent.Invoke();
+        }
+    }
+
     public partial class Form1 : Form
     {
         Bitmap bmp;
@@ -19,16 +31,21 @@ namespace DecisionTreeApp
             InitializeComponent();
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Draw();
-            tableDraw();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Console.WriteLine("Run program");
             AlgorytmC45 c45 = new AlgorytmC45();
+            //List<List<string>> res = c45.buildTree(@"adult.data");
+            //tableDraw(res);
+            PrintTablEevent instance = new PrintTablEevent();
+            instance.tableEvent += new EventDelegate(tableDraw);
+
+            instance.InvokeEvent();
         }
 
-        private void tableDraw() {
+        public void tableDraw() {
             dataGridView1.RowCount = 4;
             dataGridView1.ColumnCount = 5;
             for (int i = 0; i < 4; i++)

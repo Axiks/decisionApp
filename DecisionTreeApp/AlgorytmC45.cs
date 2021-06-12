@@ -5,8 +5,21 @@ using System.IO;
 
 namespace DecisionTreeApp
 {
+    //public delegate void EventDelegate();
+
+    //public class printTableEvent
+    //{
+    //    public event EventDelegate printTable = null;
+
+    //    public void InvokeEvent()
+    //    {
+    //        printTable.Invoke();
+    //    }
+    //}
+
     class AlgorytmC45
     {
+        public int lastAddition;
         public string[,] data;
         public List<List<string>> dataList;
 
@@ -32,6 +45,22 @@ namespace DecisionTreeApp
             Console.WriteLine("Load Func");
 
         }
+
+        //public List<List<string>> buildTree(string path) {
+        //    List<string> rows = File.ReadAllLines(path).ToList(); //Читання файлу
+        //    List<List<string>> properSet = ProcessData(rows); //Список поділений через кому
+
+        //    dataList = new List<List<string>>();
+        //    List<int> cols = new List<int>() { 0, 3, 9, 12, 14 };
+
+        //    properSet = TakeTheCol(properSet, cols);
+        //    virtualTable = new VirtualTable(properSet[0].Count);
+        //    data = new string[properSet.Count, properSet[0].Count];
+
+        //    CreateTree(properSet); //Створення дерева на підставі інфи
+
+        //    return dataList;
+        //}
 
         private static List<List<string>> TakeTheCol(List<List<string>> properSet, List<int> cols)
         {
@@ -62,35 +91,15 @@ namespace DecisionTreeApp
             double attributeValue = biggestGainRatioIndex.Item1;
 
             tableMatrix(attributeValue, attributeIndex, properSet, addition);
-
-            //Render tree
-            //if (attributeValue != 0)
-            //{
-            //    Console.WriteLine("Atrybut: " + (attributeIndex + 1));
-            //    IOrderedEnumerable<string> values = ValuesInColumn(properSet, attributeIndex).OrderBy(x => x);
-            //    foreach (string value in values)
-            //    {
-            //        //Значення
-            //        Console.Write(new string(' ', addition) + value + " -> ");
-            //        List<List<string>> newDecisionSet = new List<List<string>>();
-            //        foreach (List<string> row in properSet)
-            //        {
-            //            if (row[attributeIndex] == value)
-            //                newDecisionSet.Add(row);
-            //        }
-            //        CreateTree(newDecisionSet, addition + 4);
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine("D: " + properSet.LastOrDefault().LastOrDefault());
-            //}
         }
 
         public void tableMatrix(double attributeValue, int attributeIndex, List<List<string>> properSet, int addition = 0)
         {
-            //string[] title = { "age", "workclass", "fnlwgt", "education", "education-num", "marital-status", "occupation", "relationship", "race", "sex", "capital-gain", "capital-loss", "hours-per-week", "native-country", " salary" };
+            //Console.WriteLine("Now adition  " + addition.ToString());
+            //Console.WriteLine("Last adition  " + lastAddition.ToString());
 
+
+            //string[] title = { "age", "workclass", "fnlwgt", "education", "education-num", "marital-status", "occupation", "relationship", "race", "sex", "capital-gain", "capital-loss", "hours-per-week", "native-country", " salary" };
             if (attributeValue != 0)
             {
                 Console.WriteLine("Atrybut: " + (attributeIndex + 1));
@@ -104,17 +113,32 @@ namespace DecisionTreeApp
                     foreach (List<string> row in properSet)
                     {
                         if (row[attributeIndex] == value)
+                        {
+                           // Console.WriteLine("Aa4");
                             newDecisionSet.Add(row);
+                        }
                     }
                     CreateTree(newDecisionSet, addition + 4);
                 }
+
+                if (lastAddition > addition)
+                {
+                    virtualTable.exitLevel();
+                }
+                lastAddition = addition;
             }
             else
             {
-                //virtualTable.addValue(value, properSet.LastOrDefault().LastOrDefault());
                 virtualTable.addAnswer(properSet.LastOrDefault().LastOrDefault());
                 Console.WriteLine("D: " + properSet.LastOrDefault().LastOrDefault());
+
+                if (lastAddition > addition)
+                {
+                    virtualTable.exitLevel();
+                }
+                lastAddition = addition;
             }
+
         }
 
         //Розділяє значення

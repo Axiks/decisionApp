@@ -3,82 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DecisionTreeApp
 {
     class VirtualTable
     {
-        //Row -> Col
-        //private string valueCashe;
-        public List<List<string>> dataList;
-        public int countRow;
-        Dictionary<int, string> atrybutLevel = new Dictionary<int, string>(5);
-
-        //public List<int> atrybutLevel; //*
-        //public List<string> levelCashe; //*
+        private List<List<string>> dataList; //Вигляд таблиці
+        private Dictionary<int, string> atrybutLevel; //Стек атрибутів
+        private string[] dataColCashe;
 
         public VirtualTable(int countRow)
         {
-
-            //atrybutLevel = new List<int>();
-            //levelCashe = new List<string>();
             dataList = new List<List<string>>();
-            this.countRow = countRow;
+            atrybutLevel = new Dictionary<int, string>();
+            dataColCashe = new string[countRow];
         }
 
-        public void createLevel(int atrybut)
+        public void createLevel(int atrybutIndex)
         {
-            atrybutLevel.Add(atrybut);
+            atrybutLevel.Add(atrybutIndex, "");
         }
 
         public void addValue(string value)
         {
-            levelCashe.Add(value);
-            //valueCashe = value;
-            //dataCol[atrybutLevel[atrybutLevel.Count-1]] = value;
+            dataColCashe[atrybutLevel.Last().Key] = value;
         }
 
         public void addAnswer(string answer)
         {
-            List<string> dataCol = new List<string>(countRow);
-            for (int i = 0; i < countRow; i++)
+            dataColCashe[dataColCashe.Length - 1] = answer; // Добавлення відповіді
+
+            // 
+            for (int i = 1; i < atrybutLevel.Count; i++)
             {
-                dataCol.Add(null);
+                string lastElement = "pusto";
+                //
+                //string lastElement = dataList.Last()[atrybutLevel.ElementAt(i-1).Key];
+                if (dataColCashe[atrybutLevel.ElementAt(i - 1).Key] == null) {
+                    lastElement = dataList.Last()[atrybutLevel.ElementAt(i - 1).Key];
+                }
+                else
+                {
+                    lastElement = dataColCashe[atrybutLevel.ElementAt(i - 1).Key];
+                }
+                dataColCashe[atrybutLevel.ElementAt(i-1).Key] = lastElement;
             }
 
-            for (int i = 0; i < atrybutLevel.Count; i++)
+            List<string> tempList = new List<string>();
+            for (int i = 0; i < dataColCashe.Length; i++)
             {
-                dataCol.Insert(atrybutLevel[i], levelCashe[i]);
+                tempList.Add(dataColCashe[i]);
             }
 
-            //dataCol.Insert(atrybutLevel.Count - 1, valueCashe);
-            dataCol.Insert(countRow - 1, answer);
-            dataList.Add(dataCol);
-            //dataCol[countRow - 1] = answer;
+            dataList.Add(tempList);
+            dataColCashe = new string[dataColCashe.Length];
         }
 
         public void exitLevel()
         {
             if (atrybutLevel.Count > 1)
             {
-                atrybutLevel.RemoveAt(atrybutLevel.Count-1);
-                levelCashe.RemoveAt(levelCashe.Count - 1);
+
+                atrybutLevel.Remove(atrybutLevel.Keys.Last());
+                dataColCashe = new string[dataColCashe.Length];
             }
-        }
-
-        public void casheAdd()
-        {
-
-        }
-
-        public void casheGet()
-        {
-
-        }
-
-        public void casheDelete()
-        {
-
         }
     }
 }
